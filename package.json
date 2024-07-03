@@ -1,0 +1,38 @@
+{
+  "name": "vite-plugin-svgo-to-html",
+  "version": "1.0.0",
+  "author": "Abunuo",
+  "description": "vite-plugin-svgo-to-html help you use '*.svg' file.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "svg",
+    "svgo"
+  ],
+  "files": [
+    "dist",
+    "typings/index.d.ts"
+  ],
+  "module": "./dist/index.js",
+  "typings": "./typings/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./typings/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Abunuo/vite-plugin-svgo-to-html.git"
+  }
+}
