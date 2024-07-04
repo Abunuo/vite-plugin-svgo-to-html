@@ -1,6 +1,7 @@
+import { normalizePath } from "vite"
+import UglifyJS from "uglify-js"
 import { Dirent, readFileSync, readdirSync } from "fs"
 import crypto from "crypto"
-import { normalizePath } from "vite"
 
 const svgTitle = /<svg([^>+].*?)>/
 const clearHeightWidth = /(width|height)="([^>+].*?)"/g
@@ -66,15 +67,16 @@ export const generateScriptContent = (svgDom: string) => {
     } else {
       loadSvg();
     };
-  `
+  `;
+	const { code } = UglifyJS.minify(scriptContent)
 	const hash = crypto
 		.createHash("md5")
-		.update(scriptContent)
-		.digest("hex")
+		.update(code)
+		.digest("base64")
 		.slice(0, 8)
 	return {
 		hash,
-		scriptContent,
+		code,
 	}
 }
 

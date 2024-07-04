@@ -2,16 +2,18 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "declaration": true,
-    "declarationDir": "./typings", // 声明文件输出的目录
+    "moduleResolution": "node",
+    // "declaration": true,
+    // "declarationDir": "typings", // 声明文件输出的目录
+    // "emitDeclarationOnly": true,
+    // "allowImportingTsExtensions": true,
     "strict": true,
     "noImplicitAny": false,
     "jsx": "preserve",
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
-    "outDir": "dist",
+    // "outDir": "dist",
   },
-  "include": ["src/index.ts"],
+  "include": ["src/index.ts", "rollup.config.ts"],
   "exclude": ["node_modules"]
 }

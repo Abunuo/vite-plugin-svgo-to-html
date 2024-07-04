@@ -1,28 +1,26 @@
 import { PluginOption } from "vite";
-import nodePath from "path";
 import { generateFilePath, generateScriptContent, svgFind } from "./utils";
 
-interface vitePluginSvgoOptions {
+interface vitePluginSvgoToHtmlOptions {
   includes: string; // 匹配 svg 文件目录
   fileName?: string; // 生成文件名
   perfix?: string; // svg id 前缀
 }
 
-// 生成svg
-const vitePluginSvgo: (options: vitePluginSvgoOptions) => PluginOption = ({ includes, fileName: fName, perfix = "" }) => {
+const vitePluginSvgoToHtml: (options: vitePluginSvgoToHtmlOptions) => PluginOption = ({ includes, fileName: fName, perfix = "" }) => {
   if (!includes) {
-    return new Error(`[ERROR: vitePluginSvgo]: includes is required!`)
+    throw new Error(`[ERROR: vitePluginSvgoToHtml]: includes is required!`)
   }
   let config: any;
   try {
     const svgDom = svgFind(includes, perfix).reduce((insertHtml, svghtml) => insertHtml + svghtml, "");
-    const { hash, scriptContent } = generateScriptContent(svgDom);
-    const fileName = fName || `svg-script-${hash}.js`;
+    const { hash, code } = generateScriptContent(svgDom);
+    const fileName = fName || `svgo-${hash}.js`;
     return {
-      name: "vite-plugin-svgo",
+      name: "vite-plugin-svgo-to-html",
       load(id) {
         if (id.endsWith(fileName)) {
-          return scriptContent;
+          return code;
         }
       },
       configResolved(cfg) {
@@ -35,7 +33,7 @@ const vitePluginSvgo: (options: vitePluginSvgoOptions) => PluginOption = ({ incl
           name: fileName,
           needsCodeReference: false,
           fileName: scriptSrc,
-          source: scriptContent,
+          source: code,
           type: "asset",
         };
       },
@@ -63,9 +61,8 @@ const vitePluginSvgo: (options: vitePluginSvgoOptions) => PluginOption = ({ incl
       },
     };
   } catch (error) {
-    return new Error(`[ERROR: vitePluginSvgo compile]: ${error}`);
+    throw new Error(`[ERROR: vitePluginSvgoToHtml compile]: ${error}`);
   }
-
 };
 
-export default vitePluginSvgo;
+export default vitePluginSvgoToHtml;

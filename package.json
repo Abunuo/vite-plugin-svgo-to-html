@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-svgo-to-html",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Abunuo",
   "description": "vite-plugin-svgo-to-html help you use '*.svg' file.",
   "license": "MIT",
@@ -12,27 +12,40 @@
     "svgo"
   ],
   "files": [
-    "dist",
-    "typings/index.d.ts"
+    "dist"
   ],
-  "module": "./dist/index.js",
-  "typings": "./typings/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "typings": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "types": "./typings/index.d.ts"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
-    "build": "tsc"
+    "build": "rollup -c rollup.config.ts --configPlugin typescript"
+  },
+  "dependencies": {
+    "uglify-js": "^3.18.0",
+    "vite": "^5.3.3"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.14.9",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.3"
+    "@types/uglify-js": "^3.17.5",
+    "rollup": "^4.18.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "tslib": "^2.6.3",
+    "typescript": "^5.2.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Abunuo/vite-plugin-svgo-to-html.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
